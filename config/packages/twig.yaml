@@ -1,0 +1,12 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    exception_controller: null
+    globals:
+        category_menu: "@category_menu"
+        customer_menu: '@customer_menu'
+        checkout_menu: '@checkout_menu'
+        products_bestsellers: '@bestsellers'
+        products_onsale: '@onsale'
+        add_to_cart_url: '@add_to_cart_url'

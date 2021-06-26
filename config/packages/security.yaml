@@ -1,0 +1,48 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\Customer:
+            algorithm: auto
+    providers:
+        # users_in_memory: { memory: null }
+        app_user_provider:
+            entity:
+                class: App\Entity\Customer
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            # anonymous: lazy
+            # provider: users_in_memory
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+            anonymous: true
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+            logout:
+                path: customer_logout
+                target: /
+
+    # role_hierarchy:
+        #ROLE_STATISTIC: ROLE_USER
+        #ROLE_SUPPORT: ROLE_STATISTIC
+        #ROLE_ADMIN: [ROLE_SUPPORT, ROLE_STATISTIC]
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: customer/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: customer/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: customer/logout, roles: ROLE_USER }
+        - { path: customer/, roles: ROLE_ADMIN }
